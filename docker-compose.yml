@@ -1,0 +1,54 @@
+version: '3.4'
+
+services:
+  person-ui:
+    build:
+      context: .
+      dockerfile: Person-UI/Dockerfile
+    ports:
+      - "8102:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - SimpleProperty="hello-from-code-compose-UI"
+
+  person-api:
+    build:
+      context: .
+      dockerfile: Person-API/Dockerfile
+    ports:
+      - "8100:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - SimpleProperty="hello-from-code-compose-API"
+    depends_on: 
+      - rabbit_in_dc
+      - sql_in_dc
+
+  person-processor:
+    build:
+      context: .
+      dockerfile: Person-Processor/Dockerfile
+    depends_on: 
+      - rabbit_in_dc
+      - sql_in_dc
+
+  sql_in_dc:
+    build:
+      context: .
+      dockerfile: sql/sql.Dockerfile
+    restart: always
+    ports:
+      - "1433:1433"   
+    environment:      
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Sqlc0ntainersFTW!
+    volumes:
+      - ./data/mssql:/var/opt/mssql/data
+     
+
+  rabbit_in_dc:
+    image: rabbitmq:3-management
+    ports:
+      - 8101:15672
+    
+      

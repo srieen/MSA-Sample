@@ -1,0 +1,45 @@
+﻿@page
+@model IndexModel
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    @Model.Message
+    <br />
+    <br />
+    <br />
+    <a asp-page="./create"> Create New Person </a>
+    
+    <table class=table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>DateOfBirth</th>
+                <th>Email</th>
+                <th>PhoneNmber</th>
+                <th>CreatedDate</th>
+                <th>ModifiedDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PersonsList)
+            {
+                <tr>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Address</td>
+                    <td>@item.DateofBirth</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.ModifiedDate </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
