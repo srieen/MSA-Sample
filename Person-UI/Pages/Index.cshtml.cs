@@ -6,7 +6,7 @@ namespace Person_UI.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        public List<Person> PersonsList { get; set; }
+        public List<Person> PersonsList = new List<Person>();
         public string Message { get; private set; } = "Page models in C#";
         private readonly IPersonApiClient _personApiClient;
 
